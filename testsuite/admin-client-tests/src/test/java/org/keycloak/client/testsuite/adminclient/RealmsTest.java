@@ -30,10 +30,10 @@ public class RealmsTest {
         // TODO:mposolda jboss logging?
         System.err.println("Starting everything");
 
-        keycloakContainer = new KeycloakContainer();
+        keycloakContainer = new KeycloakContainer().useTls();
         keycloakContainer.start();
 
-        adminClient = getKeycloakAdminClient(false);
+        adminClient = getKeycloakAdminClient(true);
     }
 
     @AfterAll
