@@ -513,7 +513,7 @@ public abstract class ExtendableKeycloakContainer<SELF extends ExtendableKeycloa
 //        }
 //    }
 
-    private SSLContext buildSslContext() {
+    public SSLContext buildSslContext() {
         SSLContext sslContext;
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
