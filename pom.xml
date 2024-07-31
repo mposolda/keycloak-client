@@ -136,6 +136,7 @@
         <module>admin-client-jee</module>
         <module>authz-client</module>
         <module>policy-enforcer</module>
+        <module>testsuite</module>
     </modules>
 
     <dependencyManagement>
