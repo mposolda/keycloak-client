@@ -15,45 +15,25 @@
     <!-- No dependencies on Keycloak artifacts here -->
     <dependencies>
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <version>${testcontainers.version}</version>
+            <groupId>com.github.dasniko</groupId>
+            <artifactId>testcontainers-keycloak</artifactId>
+            <version>3.4.0</version><!-- TODO:mposolda version -->
             <exclusions>
                 <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
+                    <groupId>org.keycloak</groupId>
+                    <artifactId>keycloak-admin-client</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--
-        Module with some empty JUnit4 classes to allow Testcontainers to run without needing to include JUnit4 on the class path
-        See also https://github.com/testcontainers/testcontainers-java/issues/970 for more details
-        -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-admin-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <version>${quarkus.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-api</artifactId>
-            <version>${shrinkwrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-impl-base</artifactId>
-            <version>${shrinkwrap.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons.io.version}</version>
         </dependency>
     </dependencies>
 
