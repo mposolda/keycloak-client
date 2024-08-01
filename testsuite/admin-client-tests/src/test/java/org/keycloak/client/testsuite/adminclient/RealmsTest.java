@@ -2,11 +2,11 @@ package org.keycloak.client.testsuite.adminclient;
 
 import java.util.List;
 
+import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.client.testsuite.testcontainers.KeycloakContainer;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.testcontainers.shaded.org.hamcrest.MatcherAssert;
 import org.testcontainers.shaded.org.hamcrest.Matchers;
@@ -16,13 +16,14 @@ import org.testcontainers.shaded.org.hamcrest.Matchers;
  */
 public class RealmsTest {
 
+    private static final String KEYCLOAK_IMAGE = "quay.io/keycloak/keycloak";
+    private static final String KEYCLOAK_VERSION = "nightly"; // "25.0"; // TODO: Retrive from the configuration to be able to test with more Keycloak versions
+    public static final String MASTER_REALM = "master";
+    public static final String ADMIN_CLI_CLIENT = "admin-cli";
+
     private static KeycloakContainer keycloakContainer;
 
     private static Keycloak adminClient;
-
-    public static final String MASTER_REALM = "master";
-
-    public static final String ADMIN_CLI_CLIENT = "admin-cli";
 
     @BeforeAll
     // TODO:mposolda Better way for test containers instead of "static" method
@@ -30,7 +31,7 @@ public class RealmsTest {
         // TODO:mposolda jboss logging?
         System.err.println("Starting everything");
 
-        keycloakContainer = new KeycloakContainer().useTls();
+        keycloakContainer = new KeycloakContainer(KEYCLOAK_IMAGE + ":" + KEYCLOAK_VERSION).useTls();
         keycloakContainer.start();
 
         adminClient = getKeycloakAdminClient(true);
@@ -45,12 +46,13 @@ public class RealmsTest {
     }
 
     public static Keycloak getKeycloakAdminClient(boolean useTls) {
-        if (useTls) {
-            return Keycloak.getInstance(keycloakContainer.getAuthServerUrl(), MASTER_REALM, keycloakContainer.getAdminUsername(),
-                    keycloakContainer.getAdminPassword(), ADMIN_CLI_CLIENT, keycloakContainer.buildSslContext());
-        } else {
-            return Keycloak.getInstance(keycloakContainer.getAuthServerUrl(), MASTER_REALM, keycloakContainer.getAdminUsername(), keycloakContainer.getAdminPassword(), ADMIN_CLI_CLIENT);
-        }
+        return keycloakContainer.getKeycloakAdminClient();
+//        if (useTls) {
+//            return Keycloak.getInstance(keycloakContainer.getAuthServerUrl(), MASTER_REALM, keycloakContainer.getAdminUsername(),
+//                    keycloakContainer.getAdminPassword(), ADMIN_CLI_CLIENT, keycloakContainer.buildSslContext());
+//        } else {
+//            return Keycloak.getInstance(keycloakContainer.getAuthServerUrl(), MASTER_REALM, keycloakContainer.getAdminUsername(), keycloakContainer.getAdminPassword(), ADMIN_CLI_CLIENT);
+//        }
     }
 
     @Test
